@@ -4,7 +4,7 @@ DAT257 Agile Software Project Management taken @chalmers during the autumn of 20
 ## Team
 * Erik Hillestad Andreasson
 * Johan Birgersson
-* Lukas Lidvall
+* Lukas Lidvall (lidvall)
 * Viktor Rafstedt
 * Lukas Wigren
 
