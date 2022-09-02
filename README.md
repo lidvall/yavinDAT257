@@ -2,10 +2,10 @@
 DAT257 Agile Software Project Management taken @chalmers during the autumn of 2022. This repo belongs to the group Yavin.
 
 ## Team
-* Erik Hillestad Andreasson
-* Johan Birgersson
+* Erik Hillestad Andreasson (erikhillestad)
+* Johan Birgersson (JohanBirger)
 * Lukas Lidvall (lidvall)
-* Viktor Rafstedt
+* Viktor Rafstedt (Viktor Rafstedt)
 * Lukas Wigren (PieFreak)
 
 ## Project plan
