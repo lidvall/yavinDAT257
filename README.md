@@ -8,7 +8,7 @@ DAT257 Agile Software Project Management taken @chalmers during the autumn of 20
 * Viktor Rafstedt (ViktorRafstedt)
 * Lukas Wigren (PieFreak)
 
-##Social contract
+## Social contract
 
 All members have signed a social contract detailing rules and routines as well as expectations and goals of the project.
 
