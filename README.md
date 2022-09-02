@@ -6,7 +6,12 @@ DAT257 Agile Software Project Management taken @chalmers during the autumn of 20
 * Johan Birgersson
 * Lukas Lidvall (lidvall)
 * Viktor Rafstedt
-* Lukas Wigren
+* Lukas Wigren (PieFreak)
+
+## Project plan
+The project is based on the application of agile principles, where Scrum has been chosen as the specific framework. In order to visualize and strucutre this work, we use the integrated project planning tool in GitHub. It is basically the same thing as Trello etc.
+
+The following link will take you straight to it: https://github.com/users/lidvall/projects/1/views/1
 
 # Repository Structure
 
