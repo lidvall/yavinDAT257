@@ -1,4 +1,4 @@
-# Individual reflection - Lukas Lidvall - W1
+# Individual reflection - Viktor Rafstedt - W1
 
 - ### What do I want to learn or understand better?
 
