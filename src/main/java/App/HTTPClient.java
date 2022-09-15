@@ -9,26 +9,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 
 public class HTTPClient{
 
 
-
+    /**
+     * Likely does not work since i decoupled paramters from class
+     * @throws Exception
+     */
     private void testHTTPClient() throws Exception {
         HTTPClient obj = new HTTPClient();
 
-        System.out.println("Testing 1 - Send Http GET request");
-        obj.sendGet();
+        //System.out.println("Testing 1 - Send Http GET request");
+        //obj.sendGet();
 
         System.out.println("Testing 2 - Send Http POST request");
-        obj.sendPost();
+        obj.sendPost("https://httpbin.org/post","");
 
     }
 
 
     public StringBuilder sendGet() throws Exception {
 
-        String url = "https://www.google.com/search?q=mkyong";
+        String url = "";
 
         HttpURLConnection httpClient =
                 (HttpURLConnection) new URL(url).openConnection();
@@ -59,12 +63,10 @@ public class HTTPClient{
 
     }
 
-    public StringBuilder sendPost() throws Exception {
+    public StringBuilder sendPost(String url, String postRequest) throws Exception {
 
-        // url is missing?
-        //String url = "https://selfsolve.apple.com/wcResults.do";
-        //String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0105/ME0105C/ME0105T01z"
-        String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
+
+
 
         HttpsURLConnection httpClient = (HttpsURLConnection) new URL(url).openConnection();
 
@@ -73,10 +75,7 @@ public class HTTPClient{
         httpClient.setRequestProperty("User-Agent", "Mozilla/5.0");
         httpClient.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-        //JSONParser parser = new JSONParser();
-        Path filePath = Path.of("C:\\Users\\Johan Birgersson\\IdeaProjects\\IntelliJ\\AgileBro\\src\\main\\java\\App\\ElectionParticipation.json");
 
-        String postRequest = Files.readString(filePath);
 
         // Send post request
         httpClient.setDoOutput(true);
@@ -104,7 +103,6 @@ public class HTTPClient{
             //System.out.println(response);
             return response;
             //print result
-
 
         }
 
