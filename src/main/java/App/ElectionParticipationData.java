@@ -21,6 +21,7 @@ public class ElectionParticipationData {
     HTTPClient httpClient;
     private JSONObject jObj;
     public List<Object> valdeltagandeÅrRegionkod = new ArrayList<>();
+    Map<List<Integer>, List<Float>> fooMap = new HashMap<>();
 
 
 
@@ -65,6 +66,38 @@ public class ElectionParticipationData {
         }
 
         //System.out.println(q.responseContent.toString());
+    }
+
+
+    public void foo(List l){
+
+
+        for (int i = 0; i < l.size(); i++) {
+            Object entry = l.get(i);
+            List<Float> value = new LinkedList<>();
+            List<Integer> key = new LinkedList<>();
+            String a,b,c,d,e;
+
+
+            if(entry.toString().length()>54){
+                a=entry.toString().substring(12,16);
+                b=entry.toString().substring(19,23);
+                c=entry.toString().substring(26,30);
+                d=entry.toString().substring(41,45);
+                e=entry.toString().substring(48,52);
+                value.add(Float.valueOf(a));
+                value.add(Float.valueOf(b));
+                value.add(Float.valueOf(c));
+                key.add(Integer.valueOf(d));
+                key.add(Integer.valueOf(e));
+
+                fooMap.put(key,value);
+            }
+
+
+
+        }
+
     }
 
 }

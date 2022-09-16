@@ -13,6 +13,14 @@ public class Run {
             System.out.println(epd.valdeltagandeÅrRegionkod.get(j));
         }
 
+        epd.foo(epd.valdeltagandeÅrRegionkod);
+
+
+
+        //System.out.println(epd.fooMap.keySet(2584,2018));
+
+
+
 
 
 
@@ -20,5 +28,6 @@ public class Run {
 
     public static void main(String[] args) throws Exception {
         viewRegionElectionParticipation();
+
     }
 }
