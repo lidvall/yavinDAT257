@@ -15,7 +15,7 @@ public class Run {
             System.out.println(epd.valdeltagandeÅrRegionkod.get(j));
         }
 */
-        epd.foo(epd.valdeltagandeÅrRegionkod);
+
 
 
 

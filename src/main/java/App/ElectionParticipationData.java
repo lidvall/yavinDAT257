@@ -1,6 +1,7 @@
 package App;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.file.Files;
@@ -17,11 +18,11 @@ import java.util.*;
  */
 public class ElectionParticipationData {
 
-    List<String> municipalitiesList = new ArrayList<String>();
+    //List<String> municipalitiesList = new ArrayList<String>();
     HTTPClient httpClient;
     private JSONObject jObj;
-    public List<Object> valdeltagandeÅrRegionkod = new ArrayList<>();
-    Map<List<Integer>, List<Float>> fooMap = new HashMap<>();
+    List<Municipality> municipalities = new ArrayList<>();
+    Municipality mun;
 
 
 
@@ -30,15 +31,14 @@ public class ElectionParticipationData {
     public ElectionParticipationData() throws Exception {
         String str = databaseToString();
         addToList(str);
-
+        testshowstuff();
 
     }
 
     private String databaseToString() throws Exception {
-        //String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0105/ME0105C/ME0105T01z"
 
         String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
-        //JSONParser parser = new JSONParser();
+
         Path filePath = Path.of("src/main/java/App/ElectionParticipation.json");
 
         String postRequest = Files.readString(filePath);
@@ -56,56 +56,40 @@ public class ElectionParticipationData {
     public void addToList(String str) throws Exception {
 
         jObj = new JSONObject(str);
-        System.out.println(jObj);
-
         JSONArray results =(JSONArray) jObj.get("data");
-        //JSONObject values = (JSONObject) jObj.get("values");
-
         for (Object i : results ){
             JSONObject j = (JSONObject) i;
             JSONArray values = (JSONArray) j.get("values");
-            System.out.println(values.toString());
+            JSONArray key = (JSONArray) j.get("key");
 
-        }
+           try{
+               municipalities.add(new Municipality("NA",key.getInt(0)));
+               Municipality mun = municipalities.get(municipalities.size()-1);
+               //riksdagsval
+               mun.addElectionParticipation(key.getInt(1),values.getDouble(0));
+               //mun.addElectionParticipation(key.getInt(1),values.getDouble(1));
+               //mun.addElectionParticipation(key.getInt(1),values.getDouble(2));
 
-        for(int i = 0; i < results.length(); i++) {
-            //System.out.println(results.get(i));
-            valdeltagandeÅrRegionkod.add(results.get(i));
+           }
+           catch (JSONException je){
+               mun = new Municipality("NA",key.getInt(0));
+               mun.addElectionParticipation(key.getInt(1),0);
+               //mun.addElectionParticipation(key.getInt(1),0);
+               //mun.addElectionParticipation(key.getInt(1),0);
+           }
+
         }
 
         //System.out.println(q.responseContent.toString());
     }
 
+    public void testshowstuff(){
+        System.out.println(municipalities.get(3).getElectionParticipation());
+
+        //System.out.println(municipalities.get(3).getElectionParticipationByYear(2018));
 
 
-    public void foo(List l){
-
-
-        for (int i = 0; i < l.size(); i++) {
-            Object entry = l.get(i);
-            List<Float> value = new LinkedList<>();
-            List<Integer> key = new LinkedList<>();
-            String a,b,c,d,e;
-
-
-            if(entry.toString().length()>54){
-                a=entry.toString().substring(12,16);
-                b=entry.toString().substring(19,23);
-                c=entry.toString().substring(26,30);
-                d=entry.toString().substring(41,45);
-                e=entry.toString().substring(48,52);
-                value.add(Float.valueOf(a));
-                value.add(Float.valueOf(b));
-                value.add(Float.valueOf(c));
-                key.add(Integer.valueOf(d));
-                key.add(Integer.valueOf(e));
-
-                fooMap.put(key,value);
-            }
-
-
-
-        }
+        //System.out.println(mun.getElectionParticipationByYear(2018));
 
     }
 
