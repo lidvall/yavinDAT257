@@ -1,35 +1,20 @@
 package App;
 
 
-import java.io.IOException;
-
 public class Run {
-    static ElectionParticipationData epd;
+    static QueryTabels queryTabels;
 
-    public static void viewRegionElectionParticipation() throws Exception {
-        epd = new ElectionParticipationData();
-
-       /*
-        for (int j = 0; j < epd.valdeltagandeÅrRegionkod.size(); j++) {
-
-            System.out.println(epd.valdeltagandeÅrRegionkod.get(j));
-        }
-*/
-
-
-
-
-        //System.out.println(epd.fooMap.keySet(2584,2018));
-
-
-
-
-
-
-    }
 
     public static void main(String[] args) throws Exception {
-        viewRegionElectionParticipation();
+        String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
+        String requestPath = "src/main/java/App/ElectionParticipation.json";
+        QueryTabels queryTabels = new QueryTabels(url,requestPath);
 
     }
+
+
+
+
 }
+
+
