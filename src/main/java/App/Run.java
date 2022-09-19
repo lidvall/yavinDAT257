@@ -9,10 +9,12 @@ public class Run {
     public static void viewRegionElectionParticipation() throws Exception {
         epd = new ElectionParticipationData();
 
+       /*
         for (int j = 0; j < epd.valdeltagandeÅrRegionkod.size(); j++) {
+
             System.out.println(epd.valdeltagandeÅrRegionkod.get(j));
         }
-
+*/
         epd.foo(epd.valdeltagandeÅrRegionkod);
 
 

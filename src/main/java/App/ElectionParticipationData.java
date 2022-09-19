@@ -56,9 +56,17 @@ public class ElectionParticipationData {
     public void addToList(String str) throws Exception {
 
         jObj = new JSONObject(str);
-        //System.out.println(jObj);
+        System.out.println(jObj);
 
         JSONArray results =(JSONArray) jObj.get("data");
+        //JSONObject values = (JSONObject) jObj.get("values");
+
+        for (Object i : results ){
+            JSONObject j = (JSONObject) i;
+            JSONArray values = (JSONArray) j.get("values");
+            System.out.println(values.toString());
+
+        }
 
         for(int i = 0; i < results.length(); i++) {
             //System.out.println(results.get(i));
@@ -67,6 +75,7 @@ public class ElectionParticipationData {
 
         //System.out.println(q.responseContent.toString());
     }
+
 
 
     public void foo(List l){
