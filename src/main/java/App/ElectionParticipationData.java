@@ -21,8 +21,9 @@ public class ElectionParticipationData {
     //List<String> municipalitiesList = new ArrayList<String>();
     HTTPClient httpClient;
     private JSONObject jObj;
-    List<Municipality> municipalities = new ArrayList<>();
+    Set<Municipality> municipalities = new HashSet<>();
     Municipality mun;
+    Set<Integer> municipalityCodes = new HashSet<>();
 
 
 
@@ -30,8 +31,8 @@ public class ElectionParticipationData {
 
     public ElectionParticipationData() throws Exception {
         String str = databaseToString();
-        addToList(str);
-        testshowstuff();
+        //addToList(str);
+        testshowstuff(str);
 
     }
 
@@ -53,6 +54,26 @@ public class ElectionParticipationData {
      * Next step: parse responseContent into correct datastructure.
      * @param str
      */
+
+    private void makeMunicipalityList(String str) throws Exception {
+        jObj = new JSONObject(str);
+        JSONArray results = (JSONArray) jObj.get("data");
+        for (Object i : results) {
+            JSONObject j = (JSONObject) i;
+            JSONArray key = (JSONArray) j.get("key");
+            JSONArray values = (JSONArray) j.get("values");
+            Municipality mun = new Municipality("NA", key.getInt(0));
+            try{
+                mun.addElectionParticipation(key.getInt(1),values.getDouble(0));
+            }
+            catch (JSONException je){
+                mun.addElectionParticipation(key.getInt(1),0);
+            }
+            municipalities.add(mun);
+        }
+    }
+
+    /*
     public void addToList(String str) throws Exception {
 
         jObj = new JSONObject(str);
@@ -82,9 +103,20 @@ public class ElectionParticipationData {
 
         //System.out.println(q.responseContent.toString());
     }
+*/
+    public void testshowstuff(String str) throws Exception {
+        makeMunicipalityList(str);
 
-    public void testshowstuff(){
-        System.out.println(municipalities.get(3).getElectionParticipation());
+
+        for (Municipality municipality : municipalities) {
+            //System.out.println(municipality.getElectionParticipationByYear(2014));
+            System.out.println(municipality.toString() +" - "+ municipality.getElectionParticipation());
+        }
+
+
+        //System.out.println(municipalityCodes);
+        //System.out.println(municipalities.toString());
+        //System.out.println(municipalities.get(3).getElectionParticipation());
 
         //System.out.println(municipalities.get(3).getElectionParticipationByYear(2018));
 

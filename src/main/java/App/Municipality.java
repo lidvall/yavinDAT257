@@ -48,7 +48,12 @@ public class Municipality {
      * @return  the participation for that year
      */
     public double getElectionParticipationByYear(int year) {
-        return electionParticipation.get(year);
+        try {
+            return electionParticipation.get(year);
+        }
+        catch (NullPointerException ne){
+            return 0;
+        }
     }
 
     /**
