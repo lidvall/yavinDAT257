@@ -7,7 +7,7 @@ import java.util.HashMap;
  * This class is used to store information about a municipality (Swedish: Kommun)
  * @author Lukas Wigren
  * @version 1.0
- * @since 2022-09-15
+ * @since 2022-09-22
  */
 public class Municipality {
     private final String name;
@@ -25,6 +25,11 @@ public class Municipality {
         this.electionParticipation = new HashMap<>();
     }
 
+    /**
+     * Get function for ID
+     * @return  the ID of the Municipality
+     */
+    public int getID()  {return ID;}
     /**
      * Add function for ElectionParticipation
      * @param year  the year
