@@ -10,16 +10,13 @@ import java.util.*;
 
 
 /**
- * @author johbirger
+ * @author johbirger, Lukas Wigren
  * @version 1
- * @since 2022-09-14
- * @return data views
+ * @since 2022-09-22
  * Unfinished
  */
 public class QueryTabels {
-
     HTTPClient httpClient;
-    private JSONObject jObj;
     Set<Municipality> municipalities = new HashSet<>();
 
 
@@ -44,32 +41,46 @@ public class QueryTabels {
      * @param str
      */
     private void makeMunicipalities(String str) throws Exception {
-        jObj = new JSONObject(str);
+        JSONObject jObj = new JSONObject(str);
         JSONArray results = (JSONArray) jObj.get("data");
         for (Object i : results) {
             JSONObject j = (JSONObject) i;
-            JSONArray key = (JSONArray) j.get("key");
+            JSONArray keys = (JSONArray) j.get("key");
             JSONArray values = (JSONArray) j.get("values");
-            Municipality mun = new Municipality("NA", key.getInt(0));
-            try{
-                mun.addElectionParticipation(key.getInt(1),values.getDouble(0));
+            int id = keys.getInt(0);
+            int year = keys.getInt(1);
+            double participation;
+            try {
+                participation = Double.parseDouble(values.getString(0));
+            } catch (NumberFormatException e) {
+                participation = 0;
             }
-            catch (JSONException je){
-                mun.addElectionParticipation(key.getInt(1),0);
+            Municipality temp = municipalityExists(id);
+            if (temp != null) {
+                temp.addElectionParticipation(year, participation);
+            } else {
+                municipalities.add(new Municipality("NA", id));
             }
-            municipalities.add(mun);
         }
     }
 
+    /**
+     * Checks if the Municipality with the given ID exists, and returns it
+     * @param id    the id of a Municipality
+     * @return  Municipality with that ID, null if it doesn't exist
+     */
+    private Municipality municipalityExists(int id) {
+        for (Municipality m : municipalities) {
+            if (m.getID()==id) {return m;}
+        }
+        return null;
+    }
 
     public void testshowstuff(String str) throws Exception {
-
         makeMunicipalities(str);
         for (Municipality municipality : municipalities) {
             System.out.println(municipality.toString() +" - "+ municipality.getElectionParticipation());
-
         }
-
     }
 
 }
