@@ -13,11 +13,6 @@ public class ParticipationMunicipality extends QueryTabels {
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
 
     /**
-     * Table headers
-     */
-    public String[] header = {"Municipality", "2018", "2014","2010","2006"};
-
-    /**
      * Constructor
      */
     public ParticipationMunicipality() {
@@ -25,6 +20,7 @@ public class ParticipationMunicipality extends QueryTabels {
             makeMunicipalities(databaseToString(URL,PATH));
         } catch (Exception e) {}
     }
+
 
     private void makeMunicipalities(String str) throws Exception {  // Turn the JSON String into Data
         JSONObject jObj = new JSONObject(str);
@@ -50,6 +46,8 @@ public class ParticipationMunicipality extends QueryTabels {
         }
     }
 
+
+
     public Municipality municipalityExists(int id) { // Check for Municipality in municipalities
         for (Municipality m : municipalities) {
             if (m.getID()==id) {return m;}
@@ -57,12 +55,10 @@ public class ParticipationMunicipality extends QueryTabels {
         return null;
     }
 
-    public List<Municipality> getMuni(){
-        return municipalities;
-    }
-
     @Override
     public String toString() {
         return "municipalities=" + municipalities;
     }
 }
+
+

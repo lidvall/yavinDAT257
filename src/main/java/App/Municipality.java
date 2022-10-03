@@ -14,7 +14,7 @@ public class Municipality {
     private final int ID;
     private HashMap<Integer, Double> electionParticipation;
 
-
+    public String header[] = {"Municipality", "2018", "2014","2010","2006"};
     
     /**
      * Constructor class, creates a Kommun class using its name and ID
@@ -62,6 +62,8 @@ public class Municipality {
             return 0;
         }
     }
+
+
 
     /**
      * Comparator two municipalities in case-insensitive lexicograpic order by name
