@@ -6,11 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI {
-    String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
-    String requestPath = "src/main/java/App/ElectionParticipation.json";
-    //QueryTabels qt = new QueryTabels(url,requestPath);
-    Municipality muni = new Municipality("Göteborg",1000);
 
+    ParticipationMunicipality pm = new ParticipationMunicipality();
 
     JFrame frame = new JFrame("App");
     private JPanel mainPanel;
@@ -19,36 +16,77 @@ public class GUI {
     private JTable table1;
     private JTextField textField1;
 
-    String dataType = "";
+    String[] options = {"Municipality", "Voter", "Something else"};
+    String[] header;
+    String[][] tData;
 
-    String[] options = {"Municipality", "Voter"};
+    private void pullDataMunicipality(){
+        header = pm.header;
+        tData = new String[pm.getMuni().size()][6];
 
-    String header1[] = {"Municipality", "2018", "2014","2010","2006"};
-    String header2[] = {"Voter", "2018", "2014","2010"};
-    String tData1[][] = {{"Göteborg", "87%", "90%","67%"},
-                            {"Lerum", "84%", "50%","97%"},
-                            {"Stockholm", "12%", "13%","99%"}};
-    String tData2[][] = {{"Anders", "V", "MP","SD","AFS"},
-            {"Gustav", "S", "S","M","KD"},
-            {"Berra", "SD", "SD","V","KD"}};
+        int i = 0;
+        int z = 0;
+        for(Municipality muni : pm.getMuni()){
+            tData[i][z] = Integer.toString(muni.getID());
+            z++;
+            tData[i][z] =  Double.toString(muni.getElectionParticipationByYear(2018));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2014));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2010));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2006));
+            z=0;
+            i++;
+        }
+    }
+
+    private void pullDataVoter(){
+        header = new String[4];
+        tData = new String[2][5];
+        header[0] = "Voter";
+        header[1] = "2018";
+        header[2] = "2014";
+        header[3] = "2010";
+
+        tData[0][0] = "Anders";
+        tData[0][1] = "V";
+        tData[0][2] = "MP";
+        tData[0][3] = "M";
+
+        tData[1][0] = "Gustav";
+        tData[1][1] = "S";
+        tData[1][2] = "M";
+        tData[1][3] = "S";
+    }
 
     public GUI() throws Exception {
         for(String option : options){
             comboBox1.addItem(option);
         }
-        createTable(tData1, header1);
+
+        pullDataMunicipality();
+
+        createTable(tData, header);
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex());
-                System.out.println(viewType);
-                if(viewType.equals("Voter")) {
-                    System.out.println("JAJJAMEN");
-                    createTable(tData1, header1);
-                }else{
-                    createTable(tData2, header2);
+                //System.out.println(viewType);
+
+                switch(viewType.toString()){
+                    case "Municipality":
+                        pullDataMunicipality();
+                        break;
+                    case "Voter":
+                        pullDataVoter();
+                        break;
+                    case "Something else":
+                        //a method call for something else
+                        break;
                 }
+                createTable(tData, header);
                 table1.repaint();
             }
         });
