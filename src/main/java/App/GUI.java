@@ -2,14 +2,13 @@ package App;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class gui {
+public class GUI {
     String url = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
     String requestPath = "src/main/java/App/ElectionParticipation.json";
-    QueryTabels qt = new QueryTabels(url,requestPath);
+    //QueryTabels qt = new QueryTabels(url,requestPath);
     Municipality muni = new Municipality("Göteborg",1000);
 
 
@@ -33,7 +32,7 @@ public class gui {
             {"Gustav", "S", "S","M","KD"},
             {"Berra", "SD", "SD","V","KD"}};
 
-    public gui() throws Exception {
+    public GUI() throws Exception {
         for(String option : options){
             comboBox1.addItem(option);
         }
@@ -60,7 +59,7 @@ public class gui {
     }
 
     public void view() throws Exception {
-        frame.setContentPane(new gui().mainPanel);
+        frame.setContentPane(new GUI().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocation(600,300);
         frame.pack();
