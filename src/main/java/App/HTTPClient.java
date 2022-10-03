@@ -64,18 +64,12 @@ public class HTTPClient{
     }
 
     public StringBuilder sendPost(String url, String postRequest) throws Exception {
-
-
-
-
         HttpsURLConnection httpClient = (HttpsURLConnection) new URL(url).openConnection();
 
         //add reuqest header
         httpClient.setRequestMethod("POST");
         httpClient.setRequestProperty("User-Agent", "Mozilla/5.0");
         httpClient.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-
 
         // Send post request
         httpClient.setDoOutput(true);
@@ -92,20 +86,15 @@ public class HTTPClient{
         StringBuilder response = new StringBuilder();
 
         try (BufferedReader in = new BufferedReader(
-                new InputStreamReader(httpClient.getInputStream()))) {
-
+            new InputStreamReader(httpClient.getInputStream()))) {
             String line;
-
-
             while ((line = in.readLine()) != null) {
                 response.append(line);
             }
             //System.out.println(response);
             return response;
             //print result
-
         }
-
     }
 
 }

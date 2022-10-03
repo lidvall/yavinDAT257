@@ -69,7 +69,7 @@ public class Municipality {
     /**
      * Comparator two municipalities in numeric order by ID
      */
-    public static final Comparator<Municipality> byIDOrder = (a,b) -> Integer.compare(a.ID, b.ID);
+    public static final Comparator<Municipality> byIDOrder = Comparator.comparingInt(a -> a.ID);
 
     /**
      * toString function, returns the municipality as a String
