@@ -13,6 +13,8 @@ public class Municipality {
     private final String name;
     private final int ID;
     private HashMap<Integer, Double> electionParticipation;
+
+
     
     /**
      * Constructor class, creates a Kommun class using its name and ID
