@@ -21,6 +21,7 @@ public class ParticipationMunicipality extends QueryTabels {
         } catch (Exception e) {}
     }
 
+
     private void makeMunicipalities(String str) throws Exception {  // Turn the JSON String into Data
         JSONObject jObj = new JSONObject(str);
         JSONArray results = (JSONArray) jObj.get("data");
@@ -45,7 +46,9 @@ public class ParticipationMunicipality extends QueryTabels {
         }
     }
 
-    private Municipality municipalityExists(int id) { // Check for Municipality in municipalities
+
+
+    public Municipality municipalityExists(int id) { // Check for Municipality in municipalities
         for (Municipality m : municipalities) {
             if (m.getID()==id) {return m;}
         }
@@ -57,3 +60,5 @@ public class ParticipationMunicipality extends QueryTabels {
         return "municipalities=" + municipalities;
     }
 }
+
+
