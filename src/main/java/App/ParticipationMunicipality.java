@@ -13,6 +13,11 @@ public class ParticipationMunicipality extends QueryTabels {
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
 
     /**
+     * Header for table data
+     */
+    public String[] header = {"Municipality", "2018", "2014", "2010", "2006"};
+
+    /**
      * Constructor
      */
     public ParticipationMunicipality() {
@@ -53,6 +58,10 @@ public class ParticipationMunicipality extends QueryTabels {
             if (m.getID()==id) {return m;}
         }
         return null;
+    }
+
+    public List<Municipality> getMuni(){
+        return municipalities;
     }
 
     @Override
