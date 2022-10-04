@@ -13,7 +13,7 @@ import java.util.List;
  * @since 2022-10-04
  */
 public class ParticipationMunicipality extends QueryTabels {
-    private List<Municipality> municipalities = new ArrayList<>();
+    private final List<Municipality> municipalities = new ArrayList<>();
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
     /**
