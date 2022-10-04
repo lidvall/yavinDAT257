@@ -4,9 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class is used to store a list of Municipalities and to sort and search
+ * @author Lukas Wigren
+ * @version 1.0
+ * @since 2022-10-04
+ */
 public class ParticipationMunicipality extends QueryTabels {
     private List<Municipality> municipalities = new ArrayList<>();
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
