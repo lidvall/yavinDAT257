@@ -21,9 +21,8 @@ public class GUI {
     String[][] tData;
 
     private void pullDataMunicipality(){
-        header = pm.header;
+        header = new String[]{"Municipality", "2018", "2014", "2010", "2006"};
         tData = new String[pm.getMuni().size()][6];
-
         int i = 0;
         int z = 0;
         for(Municipality muni : pm.getMuni()){
