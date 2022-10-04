@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ParticipationMunicipality extends QueryTabels {
@@ -52,9 +53,14 @@ public class ParticipationMunicipality extends QueryTabels {
         }
         return null;
     }
-
     public List<Municipality> getMuni(){
         return municipalities;
+    }
+    public void sortByName() {
+        municipalities.sort(Municipality.byNameOrder);
+    }
+    public void sortByID() {
+        municipalities.sort(Municipality.byIDOrder);
     }
 
     @Override
