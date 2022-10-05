@@ -80,8 +80,8 @@ public class ParticipationMunicipality extends QueryTabels {
     public static class Autocompleter {
         private  final Municipality[] dictionary;
 
-        public Autocompleter(Municipality[] dictionary) {
-            this.dictionary = dictionary;
+        public Autocompleter(List<Municipality> dictionary) {
+            this.dictionary = dictionary.toArray(new Municipality[0]);
             sortDictionary();
         }
 
@@ -97,14 +97,22 @@ public class ParticipationMunicipality extends QueryTabels {
             return 1 + high - low;
         }
 
-        public Municipality[] allMatches(String prefix) {
+        public List<Municipality> allMatches(String prefix) {
             Municipality key = new Municipality(prefix, -1);
             int range = this.numberOfMatches(prefix);
-            Municipality[] result = new Municipality[range];
-            if (range == 0) return result;
+            if (range == 0) return new ArrayList<>();
             int start = RangeBinarySearch.firstIndexOf(dictionary, key, Municipality.byPrefixOrder(prefix.length()));
-            System.arraycopy(dictionary, start, result, 0, range);
-            return result;
+            Municipality[] temp = new Municipality[range];
+            System.arraycopy(dictionary, start, temp, 0, range);
+            return Arrays.asList(temp);
+        }
+    }
+
+    public static void main(String[] args) {
+        ParticipationMunicipality pm = new ParticipationMunicipality();
+        ParticipationMunicipality.Autocompleter autocompleter = new Autocompleter(pm.getMuni());
+        for (Municipality m : autocompleter.allMatches("NA")) {
+            System.out.println(m);
         }
     }
 }
