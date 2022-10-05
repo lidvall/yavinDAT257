@@ -107,14 +107,6 @@ public class ParticipationMunicipality extends QueryTabels {
             return Arrays.asList(temp);
         }
     }
-
-    public static void main(String[] args) {
-        ParticipationMunicipality pm = new ParticipationMunicipality();
-        ParticipationMunicipality.Autocompleter autocompleter = new Autocompleter(pm.getMuni());
-        for (Municipality m : autocompleter.allMatches("NA")) {
-            System.out.println(m);
-        }
-    }
 }
 
 
