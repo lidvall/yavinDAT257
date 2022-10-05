@@ -11,7 +11,7 @@ import java.util.List;
  * This class is used to store a list of Municipalities and to sort and search
  * @author Lukas Wigren
  * @version 1.0
- * @since 2022-10-04
+ * @since 2022-10-05
  */
 public class ParticipationMunicipality extends QueryTabels {
     private final List<Municipality> municipalities = new ArrayList<>();
@@ -78,18 +78,28 @@ public class ParticipationMunicipality extends QueryTabels {
         return "municipalities=" + municipalities;
     }
 
+    /**
+     * An inner class of ParticipationMunicipality used to search / autocomplete prefix
+     */
     public static class Autocompleter {
         private  final Municipality[] dictionary;
-
+        /**
+         *  Constructor class for Autocompleter
+         * @param dictionary    the list of Municipalities to look up from
+         */
         public Autocompleter(List<Municipality> dictionary) {
             this.dictionary = dictionary.toArray(new Municipality[0]);
             sortDictionary();
         }
-
         private void sortDictionary() {
             Arrays.sort(dictionary, Municipality.byNameOrder);
         }
 
+        /**
+         * Gives how many matches said prefix has in the dictionary
+         * @param prefix    the prefix to look after
+         * @return  number of matches
+         */
         public int numberOfMatches(String prefix) {
             Municipality key = new Municipality(prefix, -1);
             int high = RangeBinarySearch.lastIndexOf(dictionary, key, Municipality.byPrefixOrder(prefix.length()));
@@ -98,6 +108,11 @@ public class ParticipationMunicipality extends QueryTabels {
             return 1 + high - low;
         }
 
+        /**
+         * Gives the list of matches with said prefix
+         * @param prefix    the prefix to look after
+         * @return  list of Municipalities matching with prefix
+         */
         public List<Municipality> allMatches(String prefix) {
             Municipality key = new Municipality(prefix, -1);
             int range = this.numberOfMatches(prefix);
