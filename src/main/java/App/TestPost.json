@@ -1,0 +1,63 @@
+{
+  "query": [
+    {
+      "code": "Region",
+      "selection": {
+        "filter": "vs:RegionValkrets99",
+        "values": [
+          "VR1",
+          "VR2",
+          "VR3",
+          "VR4",
+          "VR5",
+          "VR6",
+          "VR7",
+          "VR8",
+          "VR9",
+          "VR10",
+          "VR11",
+          "VR12",
+          "VR12G",
+          "VR13",
+          "VR13G",
+          "VR14",
+          "VR15",
+          "VR16",
+          "VR17",
+          "VR18",
+          "VR19",
+          "VR20",
+          "VR21",
+          "VR22",
+          "VR23",
+          "VR24",
+          "VR25",
+          "VR26",
+          "VR27",
+          "VR28",
+          "VR29"
+        ]
+      }
+    },
+    {
+      "code": "Parti",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "M",
+          "C",
+          "FP",
+          "KD",
+          "MP",
+          "NYD",
+          "S",
+          "V",
+          "SD"
+        ]
+      }
+    }
+  ],
+  "response": {
+    "format": "json"
+  }
+}
