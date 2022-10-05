@@ -18,15 +18,13 @@ public class ParticipationMunicipality extends QueryTabels {
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
     /**
-     * Constructor
+     * Constructor class for ParticipationMunicipality
      */
     public ParticipationMunicipality() {
         try {
             makeMunicipalities(databaseToString(URL,PATH));
         } catch (Exception e) {}
     }
-
-
     private void makeMunicipalities(String str) throws Exception {  // Turn the JSON String into Data
         JSONObject jObj = new JSONObject(str);
         JSONArray results = (JSONArray) jObj.get("data");
@@ -51,21 +49,30 @@ public class ParticipationMunicipality extends QueryTabels {
         }
     }
 
-
-
+    /**
+     * Checks whether the municipality of said ID exists within the list of Municipalities
+     * @param id    the ID of the Municipality being searched for
+     * @return  the Municipality with that said ID
+     */
     public Municipality municipalityExists(int id) { // Check for Municipality in municipalities
         for (Municipality m : municipalities) {
             if (m.getID()==id) {return m;}
         }
         return null;
     }
-    public List<Municipality> getMuni(){
+
+    /**
+     * Getter function for the list of Municipalities
+     * @return  list of Municipalities
+     */
+    public List<Municipality> getMunicipalities(){
         return municipalities;
     }
-    public List<Municipality> searchByName(String prefix) {
-        Municipality temp = new Municipality(prefix, -1);
-        return municipalities.subList(municipalities.indexOf(temp), municipalities.lastIndexOf(temp));
-    }
+
+    /**
+     * toString function
+     * @return  String representing the ParticipationMunicipality class
+     */
     @Override
     public String toString() {
         return "municipalities=" + municipalities;

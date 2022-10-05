@@ -22,10 +22,10 @@ public class GUI {
 
     private void pullDataMunicipality(){
         header = new String[]{"Municipality", "2018", "2014", "2010", "2006"};
-        tData = new String[pm.getMuni().size()][6];
+        tData = new String[pm.getMunicipalities().size()][6];
         int i = 0;
         int z = 0;
-        for(Municipality muni : pm.getMuni()){
+        for(Municipality muni : pm.getMunicipalities()){
             tData[i][z] = Integer.toString(muni.getID());
             z++;
             tData[i][z] =  Double.toString(muni.getElectionParticipationByYear(2018));
