@@ -7,12 +7,12 @@ import java.util.HashMap;
  * This class is used to store information about a municipality (Swedish: Kommun)
  * @author Lukas Wigren
  * @version 1.0
- * @since 2022-09-22
+ * @since 2022-10-05
  */
 public class Municipality {
     private final String name;
     private final int ID;
-    private HashMap<Integer, Double> electionParticipation;
+    private final HashMap<Integer, Double> electionParticipation;
 
     /**
      * Constructor class, creates a Kommun class using its name and ID
@@ -61,7 +61,9 @@ public class Municipality {
         }
     }
 
-
+    public String getPrefix(int len) {
+        return len >= this.name.length() ? this.name : this.name.substring(0,len);
+    }
 
     /**
      * Comparator two municipalities in case-insensitive lexicograpic order by name
@@ -72,7 +74,16 @@ public class Municipality {
      * Comparator two municipalities in numeric order by ID
      */
     public static final Comparator<Municipality> byIDOrder = Comparator.comparingInt(a -> a.ID);
-
+    /**
+     * Comparator compares prefix of municipalities' names
+     */
+    public static Comparator<Municipality> byPrefixOrder(int k) {
+        return (o1, o2) -> {
+            String a = o1.getPrefix(k);
+            String b = o2.getPrefix(k);
+            return a.compareToIgnoreCase(b);
+        };
+    }
     /**
      * toString function, returns the municipality as a String
      * @return  representing String of the class

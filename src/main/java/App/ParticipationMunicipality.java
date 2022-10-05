@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -67,10 +68,44 @@ public class ParticipationMunicipality extends QueryTabels {
     public void sortByID() {
         municipalities.sort(Municipality.byIDOrder);
     }
-
+    public List<Municipality> searchByName(String prefix) {
+        Municipality temp = new Municipality(prefix, -1);
+        return municipalities.subList(municipalities.indexOf(temp), municipalities.lastIndexOf(temp));
+    }
     @Override
     public String toString() {
         return "municipalities=" + municipalities;
+    }
+
+    public static class Autocompleter {
+        private  final Municipality[] dictionary;
+
+        public Autocompleter(Municipality[] dictionary) {
+            this.dictionary = dictionary;
+            sortDictionary();
+        }
+
+        private void sortDictionary() {
+            Arrays.sort(dictionary, Municipality.byNameOrder);
+        }
+
+        public int numberOfMatches(String prefix) {
+            Municipality key = new Municipality(prefix, -1);
+            int high = RangeBinarySearch.lastIndexOf(dictionary, key, Municipality.byPrefixOrder(prefix.length()));
+            int low = RangeBinarySearch.firstIndexOf(dictionary, key, Municipality.byPrefixOrder(prefix.length()));
+            if (high < 0) return 0;
+            return 1 + high - low;
+        }
+
+        public Municipality[] allMatches(String prefix) {
+            Municipality key = new Municipality(prefix, -1);
+            int range = this.numberOfMatches(prefix);
+            Municipality[] result = new Municipality[range];
+            if (range == 0) return result;
+            int start = RangeBinarySearch.firstIndexOf(dictionary, key, Municipality.byPrefixOrder(prefix.length()));
+            System.arraycopy(dictionary, start, result, 0, range);
+            return result;
+        }
     }
 }
 
