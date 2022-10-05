@@ -62,12 +62,6 @@ public class ParticipationMunicipality extends QueryTabels {
     public List<Municipality> getMuni(){
         return municipalities;
     }
-    public void sortByName() {
-        municipalities.sort(Municipality.byNameOrder);
-    }
-    public void sortByID() {
-        municipalities.sort(Municipality.byIDOrder);
-    }
     public List<Municipality> searchByName(String prefix) {
         Municipality temp = new Municipality(prefix, -1);
         return municipalities.subList(municipalities.indexOf(temp), municipalities.lastIndexOf(temp));
