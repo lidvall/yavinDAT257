@@ -30,6 +30,13 @@ public class Municipality {
      * @return  the ID of the Municipality
      */
     public int getID()  {return ID;}
+
+    /**
+     * Get function for name
+     * @return  the name of the Municipality
+     */
+    public String getName() {return name;}
+
     /**
      * Add function for ElectionParticipation
      * @param year  the year
