@@ -24,22 +24,34 @@ public class GUI {
     private JButton yearsButton;
 
     String[] options = {"Municipality", "Voter", "Parties"};
+    Object viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex());
     String[] header;
     String[][] tData;
-    static int[] yearsShown;
+    int[] yearsShown = {2018, 2014, 2010};
+
+
 
     private void pullDataMunicipality(){
+        header = new String[yearsShown.length + 1];
+        header[0] = pm.header[0];
+        for(int i = 1; i < yearsShown.length+1; i++) {
+            header[i] = Integer.toString(yearsShown[i-1]);
+        }
 
-        header = pm.header;
+        for(int i = 1; i < header.length; i++) {
+            System.out.println("Header: " + header[i]);
+        }
+
         tData = new String[pm.getMuni().size()][18];
 
         int i = 0;
         int z = 1;
         for(Municipality muni : pm.getMuni()){
             tData[i][0] = Integer.toString(muni.getID());
-            for(int year = 2018; year > 1950; year = year - 4) {
-                tData[i][z] = Double.toString(muni.getElectionParticipationByYear(year));
-                z++;
+            //for(int year = 2018; year > 1950; year = year - 4) {
+            for(Integer year : yearsShown){
+               tData[i][z] = Double.toString(muni.getElectionParticipationByYear(year));
+               z++;
             }
             i++;
             z = 1;
@@ -66,7 +78,8 @@ public class GUI {
     }
 
     private void pullDataParties() {
-        header = mp.header;
+        /*
+        //header = mp.header;
         tData = new String[mp.parties.size()][6];
         int i=0;
         int z=0;
@@ -86,6 +99,8 @@ public class GUI {
             z=0;
             i++;
         }
+
+         */
     }
 
     public GUI() throws Exception {
@@ -100,31 +115,34 @@ public class GUI {
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex());
-                //System.out.println(viewType);
-
-                switch(viewType.toString()){
-                    case "Municipality":
-                        pullDataMunicipality();
-                        break;
-                    case "Voter":
-                        pullDataVoter();
-                        break;
-                    case "Parties":
-                        pullDataParties();
-                        //a method call for something else
-                        break;
-                }
-                createTable(tData, header);
-                table1.repaint();
+                viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex());
+                pullData();
             }
         });
         yearsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 YearSelect ys = new YearSelect("test");
+
             }
         });
+    }
+
+    public void pullData(){
+        switch(viewType.toString()){
+            case "Municipality":
+                pullDataMunicipality();
+                break;
+            case "Voter":
+                pullDataVoter();
+                break;
+            case "Parties":
+                pullDataParties();
+                //a method call for something else
+                break;
+        }
+        createTable(tData, header);
+        table1.repaint();
     }
 
 
@@ -134,39 +152,23 @@ public class GUI {
     }
 
     private class YearSelect extends JFrame {
-        //Sample 02: Create a Label
         JLabel label = new JLabel();
 
-        //@SuppressWarnings({ "unchecked", "rawtypes" })
         public YearSelect(String title) throws HeadlessException {
             super(title);
-            //Sample 01: Set Size and Position
+
             setBounds(100, 100, 200, 200);
             Container ControlHost = getContentPane();
             ControlHost.setLayout(new GridLayout(3, 1));
 
-            //Sample 03: Create List of Fruit Items
-            String[] years = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973", "1970", "1968", "1966", "1964", "1962", "1960",};
+            final String[] years = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973", "1970", "1968", "1966", "1964", "1962", "1960",};
 
-
-            //Sample 04: Create JList to Show Fruit Name
             JList ListYears = new JList(years);
             ListYears.setVisibleRowCount(8);
-
-            //Sample 05: Hand-Over the JList to ScrollPane & Display
             JScrollPane jcp = new JScrollPane(ListYears);
             ControlHost.add(jcp);
             ControlHost.add(label);
-
-            //Sample 07: Set Multi-Selection Mode
-//		ListYears.setSelectionMode(
-//		ListSelectionModel.SINGLE_SELECTION);
-//		ListYears.setSelectionMode(
-//				ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-            ListYears.setSelectionMode(
-                    ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-            //Sample 06: Handle the JList Event
+            ListYears.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             ListYears.addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
@@ -189,21 +191,30 @@ public class GUI {
             jb.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     List SelectedYears = ListYears.getSelectedValuesList();
+                    int[] temp = new int[SelectedYears.size()];
                     for (int i = 0; i < SelectedYears.size(); i++) {
-                        //yearsShown[i] = Integer.parseInt((String) SelectedYears.get(i));
-                        System.out.println(yearsShown[i]);
-                        GUI.yearsShown[i] = 10;
-                        System.out.println(SelectedYears.get(i));
-                        System.out.println(yearsShown[i]);
+                        temp[i] = Integer.parseInt((String) SelectedYears.get(i));
                     }
+                    setYearsShown(temp);
+                    shutDownYearSelect();
                 }});
 
             this.setLocation(600,300);
             this.setSize(400,400);
             this.setVisible(true);
+
+
         }
+
+        private void shutDownYearSelect(){
+            pullData();
+            this.dispose();
+        }
+    }
+
+    private void setYearsShown(int[] input){
+        yearsShown = input;
     }
 
     public void view() throws Exception {
@@ -213,9 +224,4 @@ public class GUI {
         frame.pack();
         frame.setVisible(true);
     }
-
-
 }
-
-
-    //String[] listItems = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973", "1970", "1968", "1966", "1964", "1962", "1960",};
