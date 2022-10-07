@@ -30,6 +30,7 @@ public class GUI {
 
     private void pullDataMunicipality(){
 
+
         header = pm.header;
         tData = new String[pm.getMuni().size()][18];
 
@@ -41,6 +42,23 @@ public class GUI {
                 tData[i][z] = Double.toString(muni.getElectionParticipationByYear(year));
                 z++;
             }
+
+        header = new String[]{"Municipality", "2018", "2014", "2010", "2006"};
+        tData = new String[pm.getMunicipalities().size()][6];
+        int i = 0;
+        int z = 0;
+        for(Municipality muni : pm.getMunicipalities()){
+            tData[i][z] = Integer.toString(muni.getID());
+            z++;
+            tData[i][z] =  Double.toString(muni.getElectionParticipationByYear(2018));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2014));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2010));
+            z++;
+            tData[i][z] = Double.toString(muni.getElectionParticipationByYear(2006));
+            z=0;
+
             i++;
             z = 1;
         }
@@ -209,8 +227,8 @@ public class GUI {
     public void view() throws Exception {
         frame.setContentPane(new GUI().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(600,300);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 

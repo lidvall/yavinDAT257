@@ -6,8 +6,15 @@ public class Run {
 
         ParticipationMunicipality pm = new ParticipationMunicipality();
         TestPartier tp = new TestPartier();
-        System.out.println(tp.getPartyObj("M").getAggregateMandate(2018));
+
+
+
+
+
+
         /*
+        System.out.println(tp.getPartyObj("M").getAggregateMandate(2018));
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Party(Acronym): " );
         String name = sc.nextLine();
@@ -17,10 +24,6 @@ public class Run {
         int year = sc.nextInt();
         System.out.println(tp.partyExists(name).getMandateByRegionAndParty(reg,year));
          */
-
-
-
-
 
         /*
         for (Party parti: tp.getParties()){
@@ -39,6 +42,5 @@ public class Run {
         gui.view();
     }
 
+
 }
-
-
