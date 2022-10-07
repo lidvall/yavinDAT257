@@ -11,9 +11,8 @@ import java.util.*;
 
 /**
  * @author johbirger, Lukas Wigren
- * @version 1
- * @since 2022-10-03
- * Unfinished
+ * @version 1.0
+ * @since 2022-10-05
  */
 public class QueryTabels {
     public String databaseToString(String url, String requestPath) throws Exception {
