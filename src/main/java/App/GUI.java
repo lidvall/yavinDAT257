@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class GUI {
 
     ParticipationMunicipality pm = new ParticipationMunicipality();
+    TestPartier mp = new TestPartier();
 
     JFrame frame = new JFrame("App");
     private JPanel mainPanel;
@@ -16,7 +17,7 @@ public class GUI {
     private JTable table1;
     private JTextField textField1;
 
-    String[] options = {"Municipality", "Voter", "Something else"};
+    String[] options = {"Municipality", "Voter", "Parties"};
     String[] header;
     String[][] tData;
 
@@ -59,6 +60,29 @@ public class GUI {
         tData[1][3] = "S";
     }
 
+    private void pullDataParties() {
+        header = mp.header;
+        tData = new String[mp.parties.size()][6];
+        int i=0;
+        int z=0;
+
+        for(Party p: mp.parties){
+            tData[i][z] = p.getName();
+            z++;
+            tData[i][z] =Integer.toString(p.getAggregateMandate(2018));
+            z++;
+            tData[i][z] =Integer.toString(p.getAggregateMandate(2014));
+            z++;
+            tData[i][z] =Integer.toString(p.getAggregateMandate(2010));
+            z++;
+            tData[i][z] =Integer.toString(p.getAggregateMandate(2006));
+            z++;
+            tData[i][z] =Integer.toString(p.getAggregateMandate(2004));
+            z=0;
+            i++;
+        }
+    }
+
     public GUI() throws Exception {
         for(String option : options){
             comboBox1.addItem(option);
@@ -81,7 +105,8 @@ public class GUI {
                     case "Voter":
                         pullDataVoter();
                         break;
-                    case "Something else":
+                    case "Parties":
+                        pullDataParties();
                         //a method call for something else
                         break;
                 }
@@ -90,6 +115,8 @@ public class GUI {
             }
         });
     }
+
+
 
     private void createTable(String[][] tableData, String[]headerData){
         table1.setModel(new DefaultTableModel(tableData,headerData));

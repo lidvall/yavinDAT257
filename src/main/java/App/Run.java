@@ -14,6 +14,7 @@ public class Run {
 
         /*
         System.out.println(tp.getPartyObj("M").getAggregateMandate(2018));
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Party(Acronym): " );
         String name = sc.nextLine();
@@ -40,5 +41,6 @@ public class Run {
         GUI gui = new GUI();
         gui.view();
     }
+
 
 }
