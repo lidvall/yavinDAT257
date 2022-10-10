@@ -17,6 +17,7 @@ public class ParticipationMunicipality extends QueryTabels {
     private final List<Municipality> municipalities = new ArrayList<>();
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
+    public String[] header = {"Municipality", "2018", "2014", "2010", "2006"};
     /**
      * Constructor class for ParticipationMunicipality
      */
@@ -25,6 +26,7 @@ public class ParticipationMunicipality extends QueryTabels {
             makeMunicipalities(databaseToString(URL,PATH));
         } catch (Exception e) {}
     }
+
     private void makeMunicipalities(String str) throws Exception {  // Turn the JSON String into Data
         JSONObject jObj = new JSONObject(str);
         JSONArray results = (JSONArray) jObj.get("data");
@@ -122,6 +124,9 @@ public class ParticipationMunicipality extends QueryTabels {
             System.arraycopy(dictionary, start, temp, 0, range);
             return Arrays.asList(temp);
         }
+    }
+    public List<Municipality> getMuni(){
+        return municipalities;
     }
 }
 
