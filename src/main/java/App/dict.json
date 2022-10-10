@@ -1,0 +1,24 @@
+{
+  "municipalities": {
+    "Stockholm": 1020,
+    "Göteborg": 1021,
+    "Växjö": 1022
+  },
+
+  "Electionregions": {
+    "Stockholmslän": "VR01",
+    "Stockholmsregion": "VR02"
+  },
+
+  "Parties": {
+    "Moderaterna": "M",
+    "Socialdemokraterna": "S",
+    "Kristdemokraterna": "KD",
+    "Liberalerna": "L",
+    "Vänsterpartier": "V",
+    "Miljöpartiet": "MP",
+    "Sverigedemokraterna": "SD",
+    "Ny Demokrati": "NYD"
+  }
+}
+
