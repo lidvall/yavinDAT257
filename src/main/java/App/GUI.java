@@ -7,11 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 
 public class GUI {
-
     ParticipationMunicipality pm = new ParticipationMunicipality();
     TestPartier mp = new TestPartier();
 
@@ -23,23 +23,19 @@ public class GUI {
     private JTextField textField1;
     private JButton yearsButton;
 
-    String[] options = {"Municipality", "Voter", "Parties"};
-    Object viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex());
-    String[] header;
-    String[][] tData;
-    int[] yearsShown = {2018, 2014, 2010};
-
+    private String[] options = {"Municipality", "Voter", "Parties"};
+    private Object viewType;
+    private String[] header;
+    private String[][] tData;
+    private int[] yearsShown = {2018, 2014, 2010}; //Initialized to the "standard" set of elections that are shown
 
 
     private void pullDataMunicipality(){
+        viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex()); //This is only needed to intialize viewType, and is thus only needed in municipality as it's shwon first
         header = new String[yearsShown.length + 1];
         header[0] = pm.header[0];
         for(int i = 1; i < yearsShown.length+1; i++) {
             header[i] = Integer.toString(yearsShown[i-1]);
-        }
-
-        for(int i = 1; i < header.length; i++) {
-            System.out.println("Header: " + header[i]);
         }
 
         tData = new String[pm.getMuni().size()][18];
@@ -48,7 +44,6 @@ public class GUI {
         int z = 1;
         for(Municipality muni : pm.getMuni()){
             tData[i][0] = Integer.toString(muni.getID());
-            //for(int year = 2018; year > 1950; year = year - 4) {
             for(Integer year : yearsShown){
                 tData[i][z] = Double.toString(muni.getElectionParticipationByYear(year));
                 z++;
@@ -79,7 +74,7 @@ public class GUI {
 
     private void pullDataParties() {
         /*
-        //header = mp.header;
+        header = mp.header;
         tData = new String[mp.parties.size()][6];
         int i=0;
         int z=0;
@@ -99,9 +94,31 @@ public class GUI {
             i++;
         }
          */
+        header = new String[yearsShown.length + 1];
+        header[0] = mp.header[0];
+        for(int i = 1; i < yearsShown.length+1; i++) {
+            header[i] = Integer.toString(yearsShown[i-1]);
+        }
+
+        tData = new String[mp.getParties().size()][18];
+
+        int i = 0;
+        int z = 1;
+        for(Party party : mp.getParties()){
+            tData[i][0] = party.getName();
+            for(Integer year : yearsShown){
+                tData[i][z] = Double.toString(party.getAggregateMandate(year));
+                z++;
+            }
+            i++;
+            z = 1;
+        }
     }
 
-    public GUI() throws Exception {
+    /**
+     * Initialization of the GUI
+     */
+    public GUI(){
         for(String option : options){
             comboBox1.addItem(option);
         }
@@ -126,7 +143,7 @@ public class GUI {
         });
     }
 
-    public void pullData(){
+    private void pullData(){
         switch(viewType.toString()){
             case "Municipality":
                 pullDataMunicipality();
@@ -136,14 +153,11 @@ public class GUI {
                 break;
             case "Parties":
                 pullDataParties();
-                //a method call for something else
                 break;
         }
         createTable(tData, header);
         table1.repaint();
     }
-
-
 
     private void createTable(String[][] tableData, String[]headerData){
         table1.setModel(new DefaultTableModel(tableData,headerData));
@@ -152,14 +166,14 @@ public class GUI {
     private class YearSelect extends JFrame {
         JLabel label = new JLabel();
 
-        public YearSelect(String title) throws HeadlessException {
+        private YearSelect(String title) throws HeadlessException {
             super(title);
 
-            setBounds(100, 100, 200, 200);
+            setBounds(150, 150, 200, 200);
             Container ControlHost = getContentPane();
-            ControlHost.setLayout(new GridLayout(3, 1));
+            ControlHost.setLayout(new GridLayout(3,1));
 
-            final String[] years = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973", "1970", "1968", "1966", "1964", "1962", "1960",};
+            final String[] years = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973"};
 
             JList ListYears = new JList(years);
             ListYears.setVisibleRowCount(8);
@@ -181,6 +195,7 @@ public class GUI {
             });
 
             JButton jb = new JButton("Select Years");
+            jb.setBackground(Color.WHITE);
             this.add(jb);
 
             jb.setPreferredSize(new Dimension(10,10));
@@ -215,10 +230,13 @@ public class GUI {
         yearsShown = input;
     }
 
-    public void view() throws Exception {
+    /**
+     *Initializes the GUI
+     */
+    public void view(){
         frame.setContentPane(new GUI().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(600,300);
+        frame.setLocation(400,200);
         frame.pack();
         frame.setVisible(true);
     }
