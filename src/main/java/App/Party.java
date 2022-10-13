@@ -44,6 +44,16 @@ public class Party<PRYKey> {
         return mandate;
     }
 
+    public double getMandateChange(int year){
+        double mandate_new = getAggregateMandate(year);
+        double mandate_old=getAggregateMandate(year-4);
+        if (mandate_old == 0){
+            return 0;
+        }
+
+        return mandate_new/mandate_old;
+    }
+
     /**
      * Get function for mandate by region and Year
      * @param region, the region of interest
