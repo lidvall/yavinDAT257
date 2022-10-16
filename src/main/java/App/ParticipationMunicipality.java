@@ -1,7 +1,8 @@
 package App;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,28 +18,30 @@ public class ParticipationMunicipality extends QueryTabels {
     private final List<Municipality> municipalities = new ArrayList<>();
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
     private final String PATH = "src/main/java/App/ElectionParticipation.json";
-    public String[] header = {"Municipality", "2018", "2014", "2010", "2006"};
     /**
      * Constructor class for ParticipationMunicipality
      */
     public ParticipationMunicipality() {
         try {
             makeMunicipalities(databaseToString(URL,PATH));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void makeMunicipalities(String str) throws Exception {  // Turn the JSON String into Data
-        JSONObject jObj = new JSONObject(str);
+        DictReader dictReader = new DictReader();
+        JSONParser parser = new JSONParser();
+        JSONObject jObj = (JSONObject) parser.parse(str);
         JSONArray results = (JSONArray) jObj.get("data");
         for (Object i : results) {
-            JSONObject j = (JSONObject) i;
-            JSONArray keys = (JSONArray) j.get("key");
-            JSONArray values = (JSONArray) j.get("values");
-            int id = keys.getInt(0);
-            int year = keys.getInt(1);
+            JSONArray keys = (JSONArray) ((JSONObject)i).get("key");
+            JSONArray values = (JSONArray) ((JSONObject)i).get("values");
+            int id = Integer.parseInt((String)keys.get(0));
+            int year = Integer.parseInt((String)keys.get(1));
             double participation;
             try {
-                participation = Double.parseDouble(values.getString(0));
+                participation = Double.parseDouble((String)values.get(0));
             } catch (NumberFormatException e) {
                 participation = 0;
             }
@@ -46,7 +49,7 @@ public class ParticipationMunicipality extends QueryTabels {
             if (temp != null) {
                 temp.addElectionParticipation(year, participation);
             } else {
-                municipalities.add(new Municipality("NA", id));
+                municipalities.add(new Municipality(dictReader.getMunicipalityName(id), id));
             }
         }
     }
@@ -124,9 +127,6 @@ public class ParticipationMunicipality extends QueryTabels {
             System.arraycopy(dictionary, start, temp, 0, range);
             return Arrays.asList(temp);
         }
-    }
-    public List<Municipality> getMuni(){
-        return municipalities;
     }
 }
 

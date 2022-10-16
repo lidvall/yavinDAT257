@@ -80,6 +80,14 @@ public class Party<PRYKey> {
                         PartyRegionYearMandate.mandate));
 
     }
+
+    @Override
+    public String toString() {
+        return "Party{" +
+                "parti='" + parti + '\'' +
+                ", PRYM=" + PRYM +
+                '}';
+    }
 }
 
 

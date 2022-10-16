@@ -4,8 +4,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.*;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
@@ -34,24 +33,31 @@ public class GUI {
     private String[] header;
     private String[][] tData;
     private int[] yearsShown = {2018, 2014, 2010}; //Initialized to the "standard" set of elections that are shown
+    private String searchPhrase = "";
 
 
     private void pullDataMunicipality(){
         viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex()); //This is only needed to intialize viewType, and is thus only needed in municipality as it's shwon first
         header = new String[yearsShown.length + 1];
-        header[0] = pm.header[0];
+        header[0] = "Municipalities";
         for(int i = 1; i < yearsShown.length+1; i++) {
             header[i] = Integer.toString(yearsShown[i-1]);
         }
-
-        tData = new String[pm.getMuni().size()][18];
+        List<Municipality> municipalities;
+        if (!textField1.getText().equals("")) {
+            ParticipationMunicipality.Autocompleter autocompleter = new ParticipationMunicipality.Autocompleter(pm.getMunicipalities());
+            municipalities = autocompleter.allMatches(searchPhrase);
+        } else {
+            municipalities = pm.getMunicipalities();
+        }
+        tData = new String[municipalities.size()][18];
 
         int i = 0;
         int z = 1;
-        for(Municipality muni : pm.getMuni()){
-            tData[i][0] = Integer.toString(muni.getID());
+        for(Municipality m : municipalities){
+            tData[i][0] = m.getName();
             for(Integer year : yearsShown){
-                tData[i][z] = Double.toString(muni.getElectionParticipationByYear(year));
+                tData[i][z] = Double.toString(m.getElectionParticipationByYear(year));
                 z++;
             }
             i++;
@@ -80,7 +86,7 @@ public class GUI {
 
     private void pullDataParties() {
         header = new String[yearsShown.length + 1];
-        header[0] = mp.header[0];
+        header[0] = "Parties";
         for(int i = 1; i < yearsShown.length+1; i++) {
             header[i] = Integer.toString(yearsShown[i-1]);
         }
@@ -131,6 +137,13 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 Grapher graph = new Grapher("Chart");
                 graph.viewGraph();
+            }
+        });
+        textField1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchPhrase = textField1.getText();
+                pullData();
             }
         });
     }
@@ -205,10 +218,9 @@ public class GUI {
                     shutDownYearSelect();
                 }});
 
-            this.setLocation(600,300);
             this.setSize(400,400);
+            this.setLocationRelativeTo(null);
             this.setVisible(true);
-
 
         }
 
@@ -304,8 +316,8 @@ public class GUI {
     public void view(){
         frame.setContentPane(new GUI().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(400,200);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
