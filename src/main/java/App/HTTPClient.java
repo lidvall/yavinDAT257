@@ -1,8 +1,6 @@
 package App;
 
 
-import org.json.*;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;

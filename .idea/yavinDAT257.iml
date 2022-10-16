@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="module-library" exported="">
       <library name="JUnit4">
         <CLASSES>
@@ -64,15 +64,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/main/lib/json-20220320.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/src/main/lib/junit.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -109,6 +100,15 @@
           <root url="jar://$MODULE_DIR$/lib/junit-jupiter-params-5.7.0.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/junit-jupiter-engine-5.7.0.jar!/" />
           <root url="jar://$MODULE_DIR$/lib/junit-platform-engine-1.7.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/lib/json-simple-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

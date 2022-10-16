@@ -1,7 +1,8 @@
 package App;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,30 +12,29 @@ public class TestPartier extends QueryTabels{
     List<Party> parties = new LinkedList<>();
     String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104C/Riksdagsmandat";
     String PATH = "src/main/java/App/TestPost.json";
-
-    public String header[] = {"Party", "2018", "2014","2010","2006"};
-
     public TestPartier() {
         try {
             //System.out.println(databaseToString(URL,PATH)); WORKS
             makePartyList(databaseToString(URL,PATH));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     private void makePartyList(String str) throws Exception {  // Turn the JSON String into Data
-        JSONObject jObj = new JSONObject(str);
+        JSONParser parser = new JSONParser();
+        JSONObject jObj = (JSONObject) parser.parse(str);
         JSONArray results = (JSONArray) jObj.get("data");
         for (Object i : results) {
-            JSONObject j = (JSONObject) i;
-            JSONArray keys = (JSONArray) j.get("key");
-            JSONArray values = (JSONArray) j.get("values");
-            String region = keys.getString(0);
-            String party = keys.getString(1);
-            int year = keys.getInt(2);
+            JSONArray keys = (JSONArray) ((JSONObject)i).get("key");
+            JSONArray values = (JSONArray) ((JSONObject)i).get("values");
+            String region = (String)keys.get(0);
+            String party = (String)keys.get(1);
+            int year = Integer.parseInt((String)keys.get(2));
             double mandate;
             try {
-                mandate = Double.parseDouble(values.getString(0));
+                mandate = Double.parseDouble((String)values.get(0));
             } catch (NumberFormatException e) {
                 mandate = 0;
             }
@@ -69,5 +69,4 @@ public class TestPartier extends QueryTabels{
     public String toString() {
         return "Parties=" + parties;
     }
-
 }
