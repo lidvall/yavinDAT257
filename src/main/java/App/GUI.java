@@ -101,6 +101,9 @@ public class GUI {
         for(Party party : mp.getParties()){
             tData[i][0] = party.getName();
             for(Integer year : yearsShown){
+                if(Double.toString(party.getAggregateMandate(year)).equals("0.0")) {
+                    continue;
+                }
                 tData[i][z] = Double.toString(party.getAggregateMandate(year));
                 z++;
             }
@@ -131,7 +134,7 @@ public class GUI {
         yearsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                YearSelect ys = new YearSelect("test");
+                YearSelect ys = new YearSelect("Select years");
 
             }
         });
@@ -181,15 +184,22 @@ public class GUI {
 
             setBounds(150, 150, 200, 200);
             Container ControlHost = getContentPane();
-            ControlHost.setLayout(new GridLayout(3,1));
+            ControlHost.setLayout(new GridLayout(2,1));
+            JPanel north = new JPanel();
+            JPanel south = new JPanel();
+            south.setLayout(new GridLayout(2,1));
+            ControlHost.add(north);
+            ControlHost.add(south);
 
             final String[] years = {"2018", "2014", "2010", "2006", "2002", "1998", "1994", "1991", "1988", "1985", "1982", "1979", "1976", "1973"};
 
             JList ListYears = new JList(years);
             ListYears.setVisibleRowCount(8);
             JScrollPane jcp = new JScrollPane(ListYears);
-            ControlHost.add(jcp);
-            ControlHost.add(label);
+            jcp.setPreferredSize(new Dimension(300,170));
+            north.add(jcp);
+            label.setSize(100,100);
+            south.add(label);
             ListYears.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
             ListYears.addListSelectionListener(new ListSelectionListener() {
                 @Override
@@ -206,9 +216,10 @@ public class GUI {
 
             JButton jb = new JButton("Select Years");
             jb.setBackground(Color.WHITE);
-            this.add(jb);
+            south.setPreferredSize(new Dimension(50,50));
+            south.add(jb);
 
-            jb.setPreferredSize(new Dimension(10,10));
+
             this.pack();
 
             jb.addActionListener(new ActionListener() {
@@ -284,19 +295,17 @@ public class GUI {
                 Color fp = new Color(0, 106, 179);
                 Color kd = new Color(0, 94, 161);
                 Color mp = new Color(83, 160, 69);
-                Color nyd = new Color(0,0,0);
                 Color s = new Color(237, 27, 52);
-                Color v = new Color(237, 28, 36);
+                Color v = new Color(170, 28, 36);
                 Color sd = new Color(221,221,0);
                 renderer.setSeriesPaint(0, m);
                 renderer.setSeriesPaint(1, c);
                 renderer.setSeriesPaint(2, fp);
                 renderer.setSeriesPaint(3, kd);
                 renderer.setSeriesPaint(4, mp);
-                renderer.setSeriesPaint(5, nyd);
-                renderer.setSeriesPaint(6, s);
-                renderer.setSeriesPaint(7, v);
-                renderer.setSeriesPaint(8, sd);
+                renderer.setSeriesPaint(5, s);
+                renderer.setSeriesPaint(6, v);
+                renderer.setSeriesPaint(7, sd);
 
                 ChartPanel panel=new ChartPanel(chart);
                 setContentPane(panel);

@@ -331,8 +331,10 @@
   "Parties": {
     "M": "Moderaterna",
     "S": "Socialdemokraterna",
+    "C" : "Centerpartiet",
     "KD": "Kristdemokraterna",
     "L": "Liberalerna",
+    "FP" : "Liberalerna",
     "V": "Vänsterpartier",
     "MP": "Miljöpartiet",
     "SD": "Sverigedemokraterna",

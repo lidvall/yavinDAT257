@@ -24,6 +24,7 @@ public class TestPartier extends QueryTabels{
 
 
     private void makePartyList(String str) throws Exception {  // Turn the JSON String into Data
+        DictReader dictReader = new DictReader();
         JSONParser parser = new JSONParser();
         JSONObject jObj = (JSONObject) parser.parse(str);
         JSONArray results = (JSONArray) jObj.get("data");
@@ -32,6 +33,10 @@ public class TestPartier extends QueryTabels{
             JSONArray values = (JSONArray) ((JSONObject)i).get("values");
             String region = (String)keys.get(0);
             String party = (String)keys.get(1);
+            if(party.equals("NYD")){
+                continue;
+            }
+            System.out.println("Party: " + party);
             int year = Integer.parseInt((String)keys.get(2));
             double mandate;
             try {
@@ -39,11 +44,12 @@ public class TestPartier extends QueryTabels{
             } catch (NumberFormatException e) {
                 mandate = 0;
             }
-            Party temp = getPartyObj(party);
+            String partyName = dictReader.getPartyName(party);
+            Party temp = getPartyObj(partyName);
             if (temp != null) {
                 temp.addMandate(year,region,mandate);
             } else {
-                parties.add(new Party(party));
+                parties.add(new Party(partyName));
             }
         }
     }
