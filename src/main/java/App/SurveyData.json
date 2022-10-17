@@ -1,0 +1,89 @@
+{
+  "query": [
+    {
+      "code": "Kon",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "1",
+          "2",
+          "TOT"
+        ]
+      }
+    },
+    {
+      "code": "InkomstIntervall",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "0-20",
+          "21-40",
+          "41-60",
+          "61-80",
+          "81-100"
+        ]
+      }
+    },
+    {
+      "code": "Partisympati",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "m",
+          "c",
+          "l",
+          "kd",
+          "nyd",
+          "mp",
+          "s",
+          "v",
+          "SD"
+        ]
+      }
+    },
+    {
+      "code": "ContentsCode",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "ME0201AT"
+        ]
+      }
+    },
+    {
+      "code": "Tid",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "2010M11",
+          "2011M05",
+          "2011M11",
+          "2012M05",
+          "2012M11",
+          "2013M05",
+          "2013M11",
+          "2014M05",
+          "2014M11",
+          "2015M05",
+          "2015M11",
+          "2016M05",
+          "2016M11",
+          "2017M05",
+          "2017M11",
+          "2018M05",
+          "2018M11",
+          "2019M05",
+          "2019M11",
+          "2020M05",
+          "2020M11",
+          "2021M05",
+          "2021M11",
+          "2022M05"
+        ]
+      }
+    }
+  ],
+  "response": {
+    "format": "json"
+  }
+}
