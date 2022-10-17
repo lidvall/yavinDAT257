@@ -10,7 +10,10 @@ import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -161,6 +164,8 @@ public class GUI {
                 break;
         }
         createTable(tData, header);
+
+        table1.setAutoCreateRowSorter(true);
         table1.repaint();
     }
 
@@ -238,7 +243,7 @@ public class GUI {
         ParticipationMunicipality pm = new ParticipationMunicipality();
         TestPartier mp = new TestPartier();
 
-        private final long serialVersionUID = 1L;
+        //private final long serialVersionUID = 1L;
 
         public Grapher(String appTitle) {
             super(appTitle);
@@ -247,17 +252,56 @@ public class GUI {
             CategoryDataset dataset = createDataset();
 
             //Create chart
-            JFreeChart chart=ChartFactory.createBarChart(
-                    "Graph", //Chart Title
-                    "Year", // Category axis
-                    "Parliament seats", // Value axis
-                    dataset,
-                    PlotOrientation.VERTICAL,
-                    true,true,false
-            );
+            if(viewType.toString() == "Municipality"){
+                JFreeChart chart=ChartFactory.createLineChart(
+                        "Graph", //Chart Title
+                        "Year", // Category axis
+                        "Election Participation", // Value axis
+                        dataset,
+                        PlotOrientation.VERTICAL,
+                        false,true,false
+                );
+                ChartPanel panel=new ChartPanel(chart);
+                CategoryPlot plot = chart.getCategoryPlot();
+                NumberAxis range = (NumberAxis) plot.getRangeAxis();
+                range.setRange(60,100);
+                setContentPane(panel);
+            }else if(viewType.toString() == "Parties"){
+                JFreeChart chart=ChartFactory.createBarChart(
+                        "Graph", //Chart Title
+                        "Year", // Category axis
+                        "Parliament seats", // Value axis
+                        dataset,
+                        PlotOrientation.VERTICAL,
+                        true,true,false
+                );
 
-            ChartPanel panel=new ChartPanel(chart);
-            setContentPane(panel);
+                //Colors from the political parties graphical profiles
+                CategoryPlot plot = chart.getCategoryPlot();
+                BarRenderer renderer = (BarRenderer) plot.getRenderer();
+                Color m = new Color(13, 157, 219);
+                Color c = new Color(17, 72, 56);
+                Color fp = new Color(0, 106, 179);
+                Color kd = new Color(0, 94, 161);
+                Color mp = new Color(83, 160, 69);
+                Color nyd = new Color(0,0,0);
+                Color s = new Color(237, 27, 52);
+                Color v = new Color(237, 28, 36);
+                Color sd = new Color(221,221,0);
+                renderer.setSeriesPaint(0, m);
+                renderer.setSeriesPaint(1, c);
+                renderer.setSeriesPaint(2, fp);
+                renderer.setSeriesPaint(3, kd);
+                renderer.setSeriesPaint(4, mp);
+                renderer.setSeriesPaint(5, nyd);
+                renderer.setSeriesPaint(6, s);
+                renderer.setSeriesPaint(7, v);
+                renderer.setSeriesPaint(8, sd);
+
+                ChartPanel panel=new ChartPanel(chart);
+                setContentPane(panel);
+            }
+
         }
 
         private CategoryDataset createDataset() {
@@ -266,12 +310,9 @@ public class GUI {
             int i = 0;
             int z = 1;
             int temp = 0;
-            for(Party party : mp.getParties()){
-                //tData[i][0] = party.getName();
+            for(int k = 0; k < tData.length; k++){
                 System.out.println("First " + i + ": " + tData[i][0]);
-
                 for(Integer year : yearsShown){
-                    //tData[i][z] = Double.toString(party.getAggregateMandate(year));
                     System.out.println("fdsfds   " + tData[i][0]);
                     temp = (int) Double.parseDouble(tData[i][z]);
                     dataset.addValue(temp, tData[i][0], year);
@@ -281,22 +322,6 @@ public class GUI {
                 i++;
                 z = 1;
             }
-/*
-            // Population in 2005
-            dataset.addValue(10, "USA", "2005");
-            dataset.addValue(15, "India", "2005");
-            dataset.addValue(20, "China", "2005");
-
-            // Population in 2010
-            dataset.addValue(15, "USA", "2010");
-            dataset.addValue(20, "India", "2010");
-            dataset.addValue(25, "China", "2010");
-
-            // Population in 2015
-            dataset.addValue(20, "USA", "2015");
-            dataset.addValue(25, "India", "2015");
-            dataset.addValue(30, "China", "2015");
-*/
             return dataset;
         }
 
@@ -305,7 +330,6 @@ public class GUI {
             Grapher example=new Grapher("Bar Chart Window");
             example.setSize(800, 400);
             example.setLocationRelativeTo(null);
-            //example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             example.setVisible(true);
         }
     }
