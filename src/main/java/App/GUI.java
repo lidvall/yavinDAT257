@@ -22,7 +22,7 @@ public class GUI {
     ParticipationMunicipality pm = new ParticipationMunicipality();
     TestPartier mp = new TestPartier();
 
-    JFrame frame = new JFrame("App");
+    JFrame frame = new JFrame("Yavin Election Analyzer");
     private JPanel mainPanel;
     private JComboBox comboBox1;
     private JScrollPane scrollPanel;
@@ -31,7 +31,7 @@ public class GUI {
     private JButton yearsButton;
     private JButton graphButton;
 
-    private String[] options = {"Municipality", "Voter", "Parties"};
+    private String[] options = {"Election Participation per Municipality", "Voter", "Parliament Seat Distribution"};
     private Object viewType;
     private String[] header;
     private String[][] tData;
@@ -41,6 +41,8 @@ public class GUI {
 
     private void pullDataMunicipality(){
         viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex()); //This is only needed to intialize viewType, and is thus only needed in municipality as it's shwon first
+        table1.setAutoCreateRowSorter(true); //same as above comment
+
         header = new String[yearsShown.length + 1];
         header[0] = "Municipalities";
         for(int i = 1; i < yearsShown.length+1; i++) {
@@ -89,21 +91,26 @@ public class GUI {
 
     private void pullDataParties() {
         header = new String[yearsShown.length + 1];
-        header[0] = "Parties";
+        header[0] = "Political party";
         for(int i = 1; i < yearsShown.length+1; i++) {
             header[i] = Integer.toString(yearsShown[i-1]);
         }
 
-        tData = new String[mp.getParties().size()][18];
+        List<Party> parties;
+        if (!textField1.getText().equals("")) {
+            TestPartier.Autocompleter autocompleter = new TestPartier.Autocompleter(mp.getParties());
+            parties = autocompleter.allMatches(searchPhrase);
+        } else {
+            parties = mp.getParties();
+        }
+
+        tData = new String[parties.size()][18];
 
         int i = 0;
         int z = 1;
-        for(Party party : mp.getParties()){
+        for(Party party : parties){
             tData[i][0] = party.getName();
             for(Integer year : yearsShown){
-                if(Double.toString(party.getAggregateMandate(year)).equals("0.0")) {
-                    continue;
-                }
                 tData[i][z] = Double.toString(party.getAggregateMandate(year));
                 z++;
             }
@@ -156,19 +163,17 @@ public class GUI {
 
     private void pullData(){
         switch(viewType.toString()){
-            case "Municipality":
+            case "Election Participation per Municipality":
                 pullDataMunicipality();
                 break;
             case "Voter":
                 pullDataVoter();
                 break;
-            case "Parties":
+            case "Parliament Seat Distribution":
                 pullDataParties();
                 break;
         }
         createTable(tData, header);
-
-        table1.setAutoCreateRowSorter(true);
         table1.repaint();
     }
 
@@ -254,20 +259,16 @@ public class GUI {
         ParticipationMunicipality pm = new ParticipationMunicipality();
         TestPartier mp = new TestPartier();
 
-        //private final long serialVersionUID = 1L;
-
         public Grapher(String appTitle) {
             super(appTitle);
 
-            // Create Dataset
             CategoryDataset dataset = createDataset();
 
-            //Create chart
-            if(viewType.toString() == "Municipality"){
+            if(viewType.toString() == "Election Participation per Municipality"){
                 JFreeChart chart=ChartFactory.createLineChart(
-                        "Graph", //Chart Title
-                        "Year", // Category axis
-                        "Election Participation", // Value axis
+                        "Graph", //Titel label
+                        "Year", //X-axis label
+                        "Election Participation", //Y-axis label
                         dataset,
                         PlotOrientation.VERTICAL,
                         false,true,false
@@ -277,11 +278,11 @@ public class GUI {
                 NumberAxis range = (NumberAxis) plot.getRangeAxis();
                 range.setRange(60,100);
                 setContentPane(panel);
-            }else if(viewType.toString() == "Parties"){
+            }else if(viewType.toString() == "Parliament Seat Distribution"){
                 JFreeChart chart=ChartFactory.createBarChart(
-                        "Graph", //Chart Title
-                        "Year", // Category axis
-                        "Parliament seats", // Value axis
+                        "Graph", //Title label
+                        "Year", //X-axis label
+                        "Parliament seats", //Y-axis label
                         dataset,
                         PlotOrientation.VERTICAL,
                         true,true,false
@@ -320,12 +321,9 @@ public class GUI {
             int z = 1;
             int temp = 0;
             for(int k = 0; k < tData.length; k++){
-                System.out.println("First " + i + ": " + tData[i][0]);
                 for(Integer year : yearsShown){
-                    System.out.println("fdsfds   " + tData[i][0]);
                     temp = (int) Double.parseDouble(tData[i][z]);
                     dataset.addValue(temp, tData[i][0], year);
-                    System.out.println("Second " + z + ": " + tData[i][z]);
                     z++;
                 }
                 i++;
@@ -347,6 +345,11 @@ public class GUI {
      *Initializes the GUI
      */
     public void view(){
+
+        ImageIcon icon = new ImageIcon("src/yavin_icon.png");
+        frame.setIconImage(icon.getImage());
+
+
         frame.setContentPane(new GUI().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

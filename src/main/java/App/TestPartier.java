@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +38,6 @@ public class TestPartier extends QueryTabels{
             if(party.equals("NYD")){
                 continue;
             }
-            System.out.println("Party: " + party);
             int year = Integer.parseInt((String)keys.get(2));
             double mandate;
             try {
@@ -66,6 +67,52 @@ public class TestPartier extends QueryTabels{
             if (name.equals(m.getName())) {return m;}
         }
         return null;
+    }
+
+    /**
+     * An inner class of ParticipationMunicipality used to search / autocomplete prefix
+     */
+    public static class Autocompleter {
+        private  final Party[] dictionary;
+        /**
+         *  Constructor class for Autocompleter
+         * @param dictionary    the list of Municipalities to look up from
+         */
+        public Autocompleter(List<Party> dictionary) {
+            this.dictionary = dictionary.toArray(new Party[0]);
+            sortDictionary();
+        }
+        private void sortDictionary() {
+            Arrays.sort(dictionary, Party.byNameOrder);
+        }
+
+        /**
+         * Gives how many matches said prefix has in the dictionary
+         * @param prefix    the prefix to look after
+         * @return  number of matches
+         */
+        public int numberOfMatches(String prefix) {
+            Party key = new Party(prefix);
+            int high = RangeBinarySearch.lastIndexOf(dictionary, key, Party.byPrefixOrder(prefix.length()));
+            int low = RangeBinarySearch.firstIndexOf(dictionary, key, Party.byPrefixOrder(prefix.length()));
+            if (high < 0) return 0;
+            return 1 + high - low;
+        }
+
+        /**
+         * Gives the list of matches with said prefix
+         * @param prefix    the prefix to look after
+         * @return  list of Municipalities matching with prefix
+         */
+        public List<Party> allMatches(String prefix) {
+            Party key = new Party(prefix);
+            int range = this.numberOfMatches(prefix);
+            if (range == 0) return new ArrayList<>();
+            int start = RangeBinarySearch.firstIndexOf(dictionary, key, Party.byPrefixOrder(prefix.length()));
+            Party[] temp = new Party[range];
+            System.arraycopy(dictionary, start, temp, 0, range);
+            return Arrays.asList(temp);
+        }
     }
 
     public List<Party> getParties(){

@@ -25,6 +25,27 @@ public class Party<PRYKey> {
         PRYM.put(key,new PartyRegionYearMandate(parti,region,year,mandate));
     }
 
+    public String getPrefix(int len) {
+        return len >= this.parti.length() ? this.parti : this.parti.substring(0,len);
+    }
+    /**
+     * Comparator two municipalities in case-insensitive lexicograpic order by name
+     */
+    public static final Comparator<Party> byNameOrder = (a,b) -> a.parti.compareToIgnoreCase(b.parti);
+
+
+    //public static final Comparator<Municipality> byIDOrder = Comparator.comparingInt(a -> a.ID);
+    /**
+     * Comparator compares prefix of municipalities' names
+     */
+    public static Comparator<Party> byPrefixOrder(int k) {
+        return (o1, o2) -> {
+            String a = o1.getPrefix(k);
+            String b = o2.getPrefix(k);
+            return a.compareToIgnoreCase(b);
+        };
+    }
+
     /**
      *
      * @param year
