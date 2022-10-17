@@ -31,7 +31,7 @@ public class GUI {
     private JButton yearsButton;
     private JButton graphButton;
 
-    private String[] options = {"Election Participation per Municipality", "Voter", "Parliament Seat Distribution"};
+    private String[] options = {"Election Participation per Municipality", "Election Results by Income and Gender", "Parliament Seat Distribution"};
     private Object viewType;
     private String[] header;
     private String[][] tData;
@@ -41,7 +41,9 @@ public class GUI {
 
     private void pullDataMunicipality(){
         viewType = comboBox1.getItemAt(comboBox1.getSelectedIndex()); //This is only needed to intialize viewType, and is thus only needed in municipality as it's shwon first
-        table1.setAutoCreateRowSorter(true); //same as above comment
+
+        table1.setAutoCreateRowSorter(true); //true if sorting should be possible
+        graphButton.setVisible(true); //true if graphing should be available
 
         header = new String[yearsShown.length + 1];
         header[0] = "Municipalities";
@@ -70,7 +72,7 @@ public class GUI {
         }
     }
 
-    private void pullDataVoter(){
+    private void pullDataIncomeGender(){
         header = new String[4];
         tData = new String[2][5];
         header[0] = "Voter";
@@ -87,9 +89,15 @@ public class GUI {
         tData[1][1] = "S";
         tData[1][2] = "M";
         tData[1][3] = "S";
+
+        //table1.setAutoCreateRowSorter(false); //true if sorting should be possible
+        graphButton.setVisible(false); //true if graphing should be available
     }
 
     private void pullDataParties() {
+        table1.setAutoCreateRowSorter(true); //true if sorting should be possible
+        graphButton.setVisible(true); //true if graphing should be available
+
         header = new String[yearsShown.length + 1];
         header[0] = "Political party";
         for(int i = 1; i < yearsShown.length+1; i++) {
@@ -166,8 +174,8 @@ public class GUI {
             case "Election Participation per Municipality":
                 pullDataMunicipality();
                 break;
-            case "Voter":
-                pullDataVoter();
+            case "Election Results by Income and Gender":
+                pullDataIncomeGender();
                 break;
             case "Parliament Seat Distribution":
                 pullDataParties();
