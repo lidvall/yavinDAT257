@@ -39,6 +39,9 @@ public class SympathizerGenderIncome extends QueryTabels {
             String Income = (String)keys.get(1);
             String party = (String)keys.get(2);
             String halfYear = (String)keys.get(3);
+           if(party.equals("nyd")){
+               continue;
+           }
             double sympati;
             try {
                 sympati = Double.parseDouble((String)values.get(0));

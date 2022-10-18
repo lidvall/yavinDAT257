@@ -21,6 +21,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class GUI {
     ParticipationMunicipality pm = new ParticipationMunicipality();
     TestPartier mp = new TestPartier();
+    SympathizerGenderIncome sg = new SympathizerGenderIncome();
 
     JFrame frame = new JFrame("Yavin Election Analyzer");
     private JPanel mainPanel;
@@ -73,24 +74,39 @@ public class GUI {
     }
 
     private void pullDataIncomeGender(){
-        header = new String[4];
-        tData = new String[2][5];
-        header[0] = "Voter";
-        header[1] = "2018";
-        header[2] = "2014";
-        header[3] = "2010";
+        table1.setAutoCreateRowSorter(true); //true if sorting should be possible
+        graphButton.setVisible(true); //true if graphing should be available
 
-        tData[0][0] = "Anders";
-        tData[0][1] = "V";
-        tData[0][2] = "MP";
-        tData[0][3] = "M";
+        header = new String[yearsShown.length + 1];
+        header[0] = "Gender | Income Percentile | Party";
+        for(int i = 1;i < yearsShown.length+1; i++) {
+            header[i] = Integer.toString(yearsShown[i-1]);
+        }
 
-        tData[1][0] = "Gustav";
-        tData[1][1] = "S";
-        tData[1][2] = "M";
-        tData[1][3] = "S";
+        List<PartySurvey> surveys;
+        //if (!textField1.getText().equals("")) {
+        //    ParticipationMunicipality.Autocompleter autocompleter = new ParticipationMunicipality.Autocompleter(pm.getMunicipalities());
+        //    municipalities = autocompleter.allMatches(searchPhrase);
+        //} else {
+        surveys = sg.getPartySurveys();
+        //}
 
-        //table1.setAutoCreateRowSorter(false); //true if sorting should be possible
+        tData = new String[surveys.size()][18];
+
+        int i = 0;
+        int z = 1;
+        for(PartySurvey ps : surveys){
+            tData[i][0] = ps.toString();
+            for(Integer year : yearsShown){
+                if(ps.getPartySympathizerByYear(year) != null) {
+                    tData[i][z] = Double.toString((Math.round(ps.getPartySympathizerByYear(year))));
+                }
+                z++;
+            }
+            i++;
+            z = 1;
+        }
+
         graphButton.setVisible(false); //true if graphing should be available
     }
 

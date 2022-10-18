@@ -37,9 +37,28 @@ public class PartySurvey {
         }
     }
 
+    public Double getPartySympathizerByYear(int year){
+        try{
+            return (getPartySympathizerbyHalfYear(Integer.toString(year) + "M11") + getPartySympathizerbyHalfYear(Integer.toString(year) + "M05"))/2;
+        }  catch (NullPointerException ne) {
+            return null;
+        }
+    }
+
     @Override
     public String toString() {
-        return "Parti: " + Party + "\n Gender: " + Gender + "\n Income: " + Income + PartySympathizer;
+        String p = "";
+        String g = switch (Gender) {
+            case "1" -> "Man";
+            case "2" -> "Female";
+            default -> "Total";
+        };
+
+        DictReader dr = new DictReader();
+        p = dr.getPartyName(Party.toUpperCase());
+
+        return g + " | " + Income + " | " + p + ":";
+        //return "Parti: " + Party + "\n Gender: " + Gender + "\n Income: " + Income + PartySympathizer;
     }
 
     @Override
