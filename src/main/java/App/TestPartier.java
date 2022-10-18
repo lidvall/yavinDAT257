@@ -50,7 +50,9 @@ public class TestPartier extends QueryTabels{
             if (temp != null) {
                 temp.addMandate(year,region,mandate);
             } else {
-                parties.add(new Party(partyName));
+                temp = new Party(partyName);
+                temp.addMandate(year,region,mandate);
+                parties.add(temp);
             }
         }
     }

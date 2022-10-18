@@ -84,12 +84,12 @@ public class GUI {
         }
 
         List<PartySurvey> surveys;
-        //if (!textField1.getText().equals("")) {
-        //    ParticipationMunicipality.Autocompleter autocompleter = new ParticipationMunicipality.Autocompleter(pm.getMunicipalities());
-        //    municipalities = autocompleter.allMatches(searchPhrase);
-        //} else {
-        surveys = sg.getPartySurveys();
-        //}
+        if (!textField1.getText().equals("")) {
+            SympathizerGenderIncome.Autocompleter autocompleter = new SympathizerGenderIncome.Autocompleter(sg.getPartySurveys());
+            surveys = autocompleter.allMatches(searchPhrase);
+        } else {
+            surveys = sg.getPartySurveys();
+        }
 
         tData = new String[surveys.size()][18];
 
