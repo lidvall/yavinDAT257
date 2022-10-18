@@ -50,7 +50,9 @@ public class ParticipationMunicipality extends QueryTabels {
             if (temp != null) {
                 temp.addElectionParticipation(year, participation);
             } else {
-                municipalities.add(new Municipality(dictReader.getMunicipalityName(id), id));
+                temp = new Municipality(dictReader.getMunicipalityName(id), id);
+                temp.addElectionParticipation(year, participation);
+                municipalities.add(temp);
             }
         }
     }
@@ -128,9 +130,6 @@ public class ParticipationMunicipality extends QueryTabels {
             System.arraycopy(dictionary, start, temp, 0, range);
             return Arrays.asList(temp);
         }
-    }
-    public List<Municipality> getMuni(){
-        return municipalities;
     }
 }
 
