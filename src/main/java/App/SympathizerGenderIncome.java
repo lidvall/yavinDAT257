@@ -17,8 +17,8 @@ public class SympathizerGenderIncome extends QueryTabels {
         return partySurveys;
     }
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0201/ME0201B/Partisympati081";
-    private final String PATH = "src/main/java/App/SurveyData.json";
-
+    private final String PATH = "SurveyData.json";
+    //private final String PATH = "src/main/java/App/SurveyData.json";
     public SympathizerGenderIncome(){
         try {
             makePartySurveys(databaseToString(URL,PATH));
