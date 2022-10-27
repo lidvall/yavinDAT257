@@ -1,4 +1,4 @@
-# Individual reflection - Erik Hillestad Andreasson - W3
+# Individual reflection - Erik Hillestad Andreasson - W4
 
 - ### What do I want to learn or understand better?
 At the moment, my previous statements still stand. I want to know more about the agile way of working as our methodologies and knowledge about it aren't really up to par to truly apply to the project yet. However, we are trying to improve.
