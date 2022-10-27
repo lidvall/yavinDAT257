@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class QueryTabels {
     public String databaseToString(String url, String requestPath) throws Exception {
+        java.net.URL requestURL= this.getClass().getResource(requestPath);
         Path filePath = Path.of(requestPath);
         String postRequest = Files.readString(filePath);
         HTTPClient httpClient = new HTTPClient();
