@@ -13,7 +13,8 @@ public class TestPartier extends QueryTabels{
 
     List<Party> parties = new LinkedList<>();
     String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104C/Riksdagsmandat";
-    String PATH = "src/main/java/App/TestPost.json";
+    String PATH = "TestPost.json";
+    //String PATH = "src/main/java/App/TestPost.json";
     public String header[] = {"Party", "2018", "2014","2010","2006"};
     public TestPartier() {
         try {

@@ -17,7 +17,8 @@ import java.util.List;
 public class ParticipationMunicipality extends QueryTabels {
     private final List<Municipality> municipalities = new ArrayList<>();
     private final String URL = "https://api.scb.se/OV0104/v1/doris/sv/ssd/START/ME/ME0104/ME0104D/ME0104T4";
-    private final String PATH = "src/main/java/App/ElectionParticipation.json";
+    private final String PATH = "ElectionParticipation.json";
+    //private final String PATH = "src/main/java/App/ElectionParticipation.json";
     public String[] header = {"Municipality", "2018", "2014", "2010", "2006"};
     /**
      * Constructor class for ParticipationMunicipality
