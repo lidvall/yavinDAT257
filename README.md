@@ -29,3 +29,7 @@ Contains all files related to the methodological side of the course, i.e social 
 
 ## Execution of the program
 There is a jar file in the project folder which can be executed in order to run the program. Download the repository as a zip, extract and run the file.
+
+## Contribution Statistics
+The statistics of each team members contribution is available in the main project folder under the file "Git Statistics", the statistics are pulled from Git Insights (the native github feature) as we were not able to get gitinspector to work due to some suspicous errors (we contacted our supervisor Kevin Ayad about this and he were not able to assist us), but the statistics drawn from Git Insights should show the same figures.
+The actual statistics can also be found here: https://github.com/lidvall/yavinDAT257/graphs/contributors
