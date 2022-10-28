@@ -24,9 +24,6 @@ The following link will take you straight to it: *[Project plan](https://github.
 ## src
 Contains all files associated with the application itself, i.e sourcecode, executables etc.
 
-## documentation
-Contains all written documentation related to the application itself but not technically required to run the software.
-
 ## methodology
 Contains all files related to the methodological side of the course, i.e social contract, individual- and team reflections etc, including the final reflection.
 
